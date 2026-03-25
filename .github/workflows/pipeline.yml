@@ -1,21 +1,20 @@
-name: Meu Pipeline Migrado
+name: Pipeline de Testes Unitarios
 on: [push]
 
 jobs:
-  test-job:
+  unit-tests:
     runs-on: ubuntu-latest
-    container: python:latest
     steps:
       - name: Checkout do codigo
         uses: actions/checkout@v4
-      - name: Rodando Test Job 1
-        run: echo "This job tests something"
 
-  test-job2:
-    runs-on: ubuntu-latest
-    container: python:latest
-    steps:
-      - name: Checkout do codigo
-        uses: actions/checkout@v4
-      - name: Rodando Test Job 2
-        run: echo "Another test"
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalar dependencias
+        run: pip install flask
+
+      - name: Executar testes unitarios
+        run: python -m unittest -v tests/appTest.py
