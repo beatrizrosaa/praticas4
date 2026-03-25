@@ -1,8 +1,8 @@
-name: Pipeline de Testes Unitarios
+name: Pipeline com Cobertura de Testes
 on: [push]
 
 jobs:
-  unit-tests:
+  coverage-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do codigo
@@ -14,7 +14,11 @@ jobs:
           python-version: '3.9'
 
       - name: Instalar dependencias
-        run: pip install flask
+        run: |
+          pip install flask
+          pip install coverage
 
-      - name: Executar testes unitarios
-        run: python -m unittest -v tests/appTest.py
+      - name: Executar testes com cobertura
+        run: |
+          python -m coverage run -m unittest -v tests/appTest.py
+          python -m coverage report
